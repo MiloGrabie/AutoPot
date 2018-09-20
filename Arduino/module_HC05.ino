@@ -1,29 +1,28 @@
-int GLED= 13; // Wet Indicator at Digital PIN D13
-int RLED= 12; // Dry Indicator at Digital PIN D12
-int SENSE= 0; // Soil Sensor input at Analog PIN A0
-int value= 0;
-void setup() {
-    // put your setup code here, to run once:
- Serial.begin(9600);
- pinMode(GLED, OUTPUT);
- pinMode(RLED, OUTPUT);
- Serial.println("SOIL MOISTURE SENSOR");
- Serial.println("-----------------------------");
+#include <SoftwareSerial.h>
+#define rxPin 11 // Broche 11 en tant que RX, à raccorder sur TX du HC-05
+#define txPin 10 // Broche 10 en tant que TX, à raccorder sur RX du HC-05
+SoftwareSerial mySerial(rxPin, txPin);
+void setup()
+{
+ // define pin modes for tx, rx pins:
+ pinMode(rxPin, INPUT);
+ pinMode(txPin, OUTPUT);
+ mySerial.begin(38400);
+ Serial.begin(38400);
 }
-void loop() {
-   // put your main code here, to run repeatedly:
- value= analogRead(SENSE);
- value= value/10;
- Serial.println(value);
- if(value<50)
- {
- digitalWrite(GLED, HIGH);
- }
- else
- {
- digitalWrite(RLED,HIGH);
- }
- delay(1000);
- digitalWrite(GLED,LOW);
- digitalWrite(RLED, LOW);
+void loop()
+{
+int i = 0;
+char someChar[32] = {0};
+// when characters arrive over the serial port...
+if(Serial.available()) {
+ do{
+ someChar[i++] = Serial.read();
+ delay(3);
+ }while (Serial.available() > 0);
+ mySerial.println(someChar);
+ Serial.println(someChar);
+}
+while(mySerial.available())
+ Serial.print((char)mySerial.read());
 }
