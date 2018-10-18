@@ -1,4 +1,5 @@
 #include "conf.h"
+#include "setup.cpp"
 int val1; // A BOUGER
 int val2; // A BOUGER
 int CAMdetection;  //A BOUGER
@@ -7,14 +8,16 @@ int CAMdetection;  //A BOUGER
 void loop() {
   // put your main code here, to run repeatedly:
   /*programme moteurs dÃ©placement*/
- if ((WET==LOW)&& (pump==LOW) && (MoteurPignonFront==LOW) && (MoteurPignonBack==LOW)) 
+ if ((WET==LOW)&& (pump==LOW) && (motorPignonFront==LOW) && (motorPignonBack==LOW)) 
   {
- void movingForward
+ void movingForward () ;
  }  
  else 
  {
- void movingBack
+ void movingStop () ;
 }
+}
+
 
 
 /* Selon l'humiditÃ©, dÃ©finir un certain temps d'arrosage (pompe allumÃ©e) -> arbitraire avant les tests

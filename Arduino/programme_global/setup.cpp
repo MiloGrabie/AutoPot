@@ -15,6 +15,7 @@ void setup() {
   // define pin modes for tx, rx pins:
   pinMode(rxPin, INPUT);
   pinMode(txPin, OUTPUT);
+  // A MODIF
   /* init moteurs*/
   pinMode(motorPignonFront, OUTPUT);
   pinMode(motorPignonBack, OUTPUT);

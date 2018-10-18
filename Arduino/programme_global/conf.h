@@ -20,5 +20,6 @@ void movingTurnLeft ();
 void pignonUp ();
 void pignonBack ();
 void pignonStop ();
-
-
+void test ();
+void test1 ();
+void test2 ();

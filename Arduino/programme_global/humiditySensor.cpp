@@ -1,19 +1,16 @@
-#include "conf.h"
-#include "arduino.h"
+#include "Arduino.h"
 #include "setup.cpp"
-#include <SoftwareSerial.h>
-
-int value = 0 ;
-value = analogRead(SENSE);
+#include "conf.h"
+//#include <SoftwareSerial.h>
+void test () {
+int value = 0;
+value = analogRead(sense);
 value = value / 10;
-Serial.println(value);
-if (value < 50)
-{
+if (value < 50) {
   digitalWrite(WET, HIGH);
 }
-else
-{
+else {
   digitalWrite(WET, LOW);
 }
 
-
+}
