@@ -1,7 +1,7 @@
 #include "conf.h"
 #include "arduino.h"
 
-void initMotor();
+void initmovingMotor();
 void movingForward ();
 void  movingBack ();
 

@@ -6,6 +6,7 @@
 #include "arduino.h"
 #include "bluetooth.h"
 #include "movingmotor.h"
+#include "motorPignon.h"
 
 #define DEBUG
 
@@ -13,14 +14,14 @@
 //SoftwareSerial mySerial(rxPin, txPin);
 
 
-boolean isWet= false;
-boolean pumpOn= false;
-boolean motorPignonFrontOn= false;
-boolean motorPignonBackOn= false;
-boolean marche=false;
+boolean isWet = false;
+boolean pumpOn = false;
+boolean motorPignonFrontOn = false;
+boolean motorPignonBackOn = false;
+boolean marche = false;
 
 
-char ret=0; // retour des fonctions
+char ret = 0; // retour des fonctions
 
 char messageType;
 int dureeDeFonctionnementInitial;
@@ -42,13 +43,13 @@ void setup() {
     Serial.begin(9600);*/
   // A MODIF
   /* init moteurs*/
-//  pinMode(motorPignonFront, OUTPUT);
-//  pinMode(motorPignonBack, OUTPUT);
-//  pinMode(PUMP, OUTPUT);
+  //  pinMode(motorPignonFront, OUTPUT);
+  //  pinMode(motorPignonBack, OUTPUT);
+  //  pinMode(PUMP, OUTPUT);
 
-initMotor();
+  initmovingMotor();
 
-
+  initMotorPignon();
   /*
     pinMode(MoteurPignonFront,OUTPUT)
     pinMode(MoteurPignonFront,OUTPUT) A MODIF
@@ -56,28 +57,28 @@ initMotor();
   */
   /* mySerial.begin(38400);
     Serial.begin(38400);*/
-  /*capteurs fin de course*/
-//  pinMode(buttonpin1, INPUT); // declare buttonpin (digital 47) as input
-//  pinMode(buttonpin2, INPUT); // declare buttonpin (digital 48) as input
+  /*capteurs fin de course*/ 
+  //  pinMode(buttonpin1, INPUT); // declare buttonpin (digital 47) as input (capteur1)
+  //  pinMode(buttonpin2, INPUT); // declare buttonpin (digital 48) as input (capteur2)
+  initCapteurfindecourse();
 }
-
 
 void loop() {
   // put your main code here, to run repeatedly:
   /*programme moteurs dÃƒÂ©placement*/
-  
+
   ret = getMessageType(messageType);
-  if (ret!=BL_ERR_NO_MESSAGE) {
-        if (messageType==MARCHE) marche=true;
-        if (messageType==ARRET) marche=false;
-                if (messageType==DUREE) {
-                  ret = getMessageContent(DUREE,(char*)&dureeDeFonctionnementInitial);
-                  #ifdef DEBUG
-                  if (ret!=BL_OK) Serial.println("Err Message duree");
-                  #endif
-                }
+  if (ret != BL_ERR_NO_MESSAGE) {
+    if (messageType == MARCHE) marche = true;
+    if (messageType == ARRET) marche = false;
+    if (messageType == DUREE) {
+      ret = getMessageContent(DUREE, (char*)&dureeDeFonctionnementInitial);
+#ifdef DEBUG
+      if (ret != BL_OK) Serial.println("Err Message duree");
+#endif
+    }
   }
-  
+
   if ((!isWet ) && (!pumpOn) && (!isPignonUp()) && (!isPignonDown()))
   {
     movingForward () ;

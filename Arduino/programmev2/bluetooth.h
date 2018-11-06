@@ -4,4 +4,4 @@
 #define BL_ERR_NO_MESSAGE 2
 void initBluetooth();
 char getMessageType(char* type);
-char getMessageContent(char type,char* Content);
+char getMessageContent(char type, char* Content);

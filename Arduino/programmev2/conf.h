@@ -19,9 +19,9 @@
 //void movingTurnRight ();
 //void movingTurnLeft ();
 //motorPignon
-void pignonUp ();
-void pignonBack ();
-void pignonStop ();
+//void pignonUp ();
+//void pignonBack ();
+//void pignonStop ();
 boolean isPignonUp();
 boolean isPignonDown();
 //void test3 ();
@@ -34,30 +34,30 @@ boolean isPignonDown();
 #define DUREE 2
 
 /*//------- setup ------
-// test car fonctionne pas dans setup.cpp
-#include <SoftwareSerial.h>
-//#include "conf.h"
-#include "arduino.h"
-//int wet; // wet Indicator at Digital PIN D13  A BOUGER
-//SoftwareSerial mySerial(rxPin, txPin);
+  // test car fonctionne pas dans setup.cpp
+  #include <SoftwareSerial.h>
+  //#include "conf.h"
+  #include "arduino.h"
+  //int wet; // wet Indicator at Digital PIN D13  A BOUGER
+  //SoftwareSerial mySerial(rxPin, txPin);
 
-void setup() {
+  void setup() {
   // put your setup code here, to run once:
   /* Programme capteur humiditÃ©*/
-  /* Serial.begin(9600);
-    Serial.println("SOIL MOISTURE SENSOR");
-    Serial.println("-----------------------------");*/
- // pinMode(wet, OUTPUT);
+/* Serial.begin(9600);
+  Serial.println("SOIL MOISTURE SENSOR");
+  Serial.println("-----------------------------");*/
+// pinMode(wet, OUTPUT);
 
-  /*programme module HC-05*/
-  // define pin modes for tx, rx pins:
-  /* pinMode(rxPin, INPUT);
-    pinMode(txPin, OUTPUT);
-    mySerial.begin(9600);
-    Serial.begin(9600);*/
-  // A MODIF
-  /* init moteurs*/
- /* pinMode(motorPignonFront, OUTPUT);
+/*programme module HC-05*/
+// define pin modes for tx, rx pins:
+/* pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
+  mySerial.begin(9600);
+  Serial.begin(9600);*/
+// A MODIF
+/* init moteurs*/
+/* pinMode(motorPignonFront, OUTPUT);
   pinMode(motorPignonBack, OUTPUT);
   pinMode(motorDeplacement1Front, OUTPUT);
   pinMode(motorDeplacement1Back, OUTPUT);
@@ -70,14 +70,14 @@ void setup() {
 
 
   /*
-    pinMode(MoteurPignonFront,OUTPUT)
-    pinMode(MoteurPignonFront,OUTPUT) A MODIF
-    pinMode(MoteurPignonFront,OUTPUT)
-  */
-  /* mySerial.begin(38400);
-    Serial.begin(38400);*/
-  /*capteurs fin de course*/
-  /*pinMode(buttonpin1, INPUT); // declare buttonpin (digital 47) as input
+   pinMode(MoteurPignonFront,OUTPUT)
+   pinMode(MoteurPignonFront,OUTPUT) A MODIF
+   pinMode(MoteurPignonFront,OUTPUT)
+*/
+/* mySerial.begin(38400);
+  Serial.begin(38400);*/
+/*capteurs fin de course*/
+/*pinMode(buttonpin1, INPUT); // declare buttonpin (digital 47) as input
   pinMode(buttonpin2, INPUT); // declare buttonpin (digital 48) as input
-}*/
+  }*/
 

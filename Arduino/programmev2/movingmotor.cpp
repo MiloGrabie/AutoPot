@@ -1,10 +1,10 @@
 #include "conf.h"
 #include "arduino.h"
 #include "movingmotor.h"
-// definier des manoeuvres complexes (demitour,...)
+// definier des manoeuvres complexes (demi-tour,...)
 // int tempsManoeuvre[MAN_NB] = {2000, 2800, 1600, 4500, 1400, 400};
 // int definitionManoeuvre[MAN_NB][2] = {{ARRIERE, ARRET}, {AVANT, AVANT}, {AVANT, ARRET}, {AVANT, AVANT}, {AVANT, ARRET}, {AVANT, AVANT}};
-void initMotor() {
+void initmovingMotor() {
   pinMode(motorDeplacement1Front, OUTPUT);
   pinMode(motorDeplacement1Back, OUTPUT);
   pinMode(motorDeplacement2Front, OUTPUT);
