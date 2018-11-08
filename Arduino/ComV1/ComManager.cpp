@@ -14,23 +14,3 @@ String comReceiver(){
   String cmd = szSerialInputBuffer;
   return cmd;
 }
-
-void serialInit(){
-  
-}
-
-/*{
-  int iNbBytes;
-  iNbBytes = Serial.readBytesUntil('\n', _szSerialInputBuffer, 16); // l'arduino lira donc le code jusqu'a \n
-  _szSerialInputBuffer[iNbBytes] = '\0';
-  return iNbBytes;
-}
-
-void setup(){
-  Serial.begin(115200);
-}
-
-void loop(){ // Boucle principal
-  readSerialUntilEOL(szSerialInputBuffer); // appel de la fonction readSerialUntilEOL
-  Serial.println(szSerialInputBuffer);
-}*/
