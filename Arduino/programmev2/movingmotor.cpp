@@ -47,5 +47,8 @@ void movingTurnLeft () {
   digitalWrite(motorDeplacement2Back, LOW) ;
 }
 
-
+//void manoeuvreDemiTour () {
+//   int tempsManoeuvre[MAN_NB] = {2000, 2000, 2000, 2000};
+//   int definitionManoeuvreDemiTour[MAN_NB][2] = {{ARRIERE, ARRET}, {ARRET, AVANT}, {ARRIERE, ARRET}, {ARRET, AVANT}};
+//}
 

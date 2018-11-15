@@ -1,9 +1,12 @@
-// A CHANGER
+// define pin modes for tx, rx pins:
+/* pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
+  mySerial.begin(9600);
+  Serial.begin(9600);*/
 #include "conf.h"
 #include "arduino.h"
 #include "bluetooth.h"
 #include <SoftwareSerial.h>
-
 
 int i = 0;
 static char someChar[32] = {0};

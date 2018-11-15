@@ -1,5 +1,3 @@
-//------- setup ------
-// test car fonctionne pas dans setup.cpp
 #include <SoftwareSerial.h>
 #include "conf.h"
 #include "humiditySensor.h"
@@ -7,12 +5,7 @@
 #include "bluetooth.h"
 #include "movingmotor.h"
 #include "motorPignon.h"
-
 #define DEBUG
-
-//int wet; // wet Indicator at Digital PIN D13  A BOUGER
-//SoftwareSerial mySerial(rxPin, txPin);
-
 
 boolean isWet = false;
 boolean pumpOn = false;
@@ -28,44 +21,23 @@ int dureeDeFonctionnementInitial;
 
 void setup() {
   // put your setup code here, to run once:
-  /* Programme capteur humiditÃ©*/
-  /* Serial.begin(9600);
-    Serial.println("SOIL MOISTURE SENSOR");
-    Serial.println("-----------------------------");*/
-
+  /* init capteur humidité*/
   initHumiditySensor(SENSE);
+  /*init module HC-05*/
   initBluetooth();
-  /*programme module HC-05*/
-  // define pin modes for tx, rx pins:
-  /* pinMode(rxPin, INPUT);
-    pinMode(txPin, OUTPUT);
-    mySerial.begin(9600);
-    Serial.begin(9600);*/
-  // A MODIF
-  /* init moteurs*/
-  //  pinMode(motorPignonFront, OUTPUT);
-  //  pinMode(motorPignonBack, OUTPUT);
-  //  pinMode(PUMP, OUTPUT);
-
+  /* init moteurs deplacement*/
   initmovingMotor();
-
+  /* init moteurs pignon*/
   initMotorPignon();
-  /*
-    pinMode(MoteurPignonFront,OUTPUT)
-    pinMode(MoteurPignonFront,OUTPUT) A MODIF
-    pinMode(MoteurPignonFront,OUTPUT)
-  */
-  /* mySerial.begin(38400);
-    Serial.begin(38400);*/
-  /*capteurs fin de course*/ 
-  //  pinMode(buttonpin1, INPUT); // declare buttonpin (digital 47) as input (capteur1)
-  //  pinMode(buttonpin2, INPUT); // declare buttonpin (digital 48) as input (capteur2)
-  initCapteurfindecourse();
+  /*init capteurs fin de course*/
+  initCapteursfindecourse();
+  /*init pompe*/
+  initPump();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  /*programme moteurs dÃƒÂ©placement*/
+  /*programme bluetooth*/
 
   ret = getMessageType(messageType);
   if (ret != BL_ERR_NO_MESSAGE) {
@@ -78,7 +50,7 @@ void loop() {
 #endif
     }
   }
-
+  /*programme moteur déplacement*/
   if ((!isWet ) && (!pumpOn) && (!isPignonUp()) && (!isPignonDown()))
   {
     movingForward () ;
@@ -87,9 +59,20 @@ void loop() {
   {
     movingStop () ;
   }
+
+  /*programme moteur pignon*/
+  if ((isPignonUp()) && (findecourse1on))
+  {
+    pignonStop () ;
+  }
+  
+  if ((isPignonDown()) && (findecourse2on))
+  {
+    pignonStop () ;
+  }
+
+
 }
-
-
 
 /* Selon l'humiditÃƒÂ©, dÃƒÂ©finir un certain temps d'arrosage (pompe allumÃƒÂ©e) -> arbitraire avant les tests
     tant que le robot ne dÃƒÂ©tecte pas une tomate, ou n'arrose pas, il doit continuer ÃƒÂ  avancer (2 moteurs de dÃƒÂ©placement)

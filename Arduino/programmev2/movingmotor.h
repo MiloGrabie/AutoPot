@@ -4,12 +4,9 @@
 void initmovingMotor();
 void movingForward ();
 void  movingBack ();
-
 void movingStop ();
-
 void movingTurnRight();
-
 void movingTurnLeft();
-
+void manoeuvreDemiTour();
 
 
