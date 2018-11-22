@@ -1,18 +1,19 @@
 #include <SoftwareSerial.h>
 #include "conf.h"
-#include "humiditySensor.h"
+#include "humidityControl.h"
 #include "arduino.h"
 #include "bluetooth.h"
 #include "movingmotor.h"
 #include "motorPignon.h"
 #define DEBUG
 
-boolean isWet = false;
-boolean pumpOn = false;
-boolean motorPignonFrontOn = false;
-boolean motorPignonBackOn = false;
-boolean marche = false;
 
+boolean marche = true;
+
+boolean leftUTurnNeeded = false;
+boolean rightUTurnNeeded = false;
+boolean manoeuvreRunning = false;
+boolean humidityControl = false;
 
 char ret = 0; // retour des fonctions
 
@@ -23,23 +24,22 @@ void setup() {
   // put your setup code here, to run once:
   /* init capteur humidité*/
   initHumiditySensor(SENSE);
+    /*init pompe*/
+  initPump();
+  
   /*init module HC-05*/
   initBluetooth();
   /* init moteurs deplacement*/
   initmovingMotor();
-  /* init moteurs pignon*/
+  /* init moteurs pignon et capteurs fin de course*/
   initMotorPignon();
-  /*init capteurs fin de course*/
-  initCapteursfindecourse();
-  /*init pompe*/
-  initPump();
+
+     humidityControl = true;
+
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  /*programme bluetooth*/
-
-  ret = getMessageType(messageType);
+void getMessageFromBluetooth() {
+  ret = getMessageType(&messageType);
   if (ret != BL_ERR_NO_MESSAGE) {
     if (messageType == MARCHE) marche = true;
     if (messageType == ARRET) marche = false;
@@ -50,30 +50,56 @@ void loop() {
 #endif
     }
   }
-  /*programme moteur déplacement*/
-  if ((!isWet ) && (!pumpOn) && (!isPignonUp()) && (!isPignonDown()))
-  {
-    movingForward () ;
-  }
-  else
-  {
-    movingStop () ;
-  }
+}
 
-  /*programme moteur pignon*/
-  if ((isPignonUp()) && (findecourse1on))
-  {
-    pignonStop () ;
+
+void getMessageFromRasberry() {
+// leftUTurnNeeded = false;
+// rightUTurnNeeded = false;
+// humidityControl = false;
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  /*programme bluetooth*/
+
+  getMessageFromBluetooth();
+  getMessageFromRasberry();
+  if (marche&&!manoeuvreRunning&&!leftUTurnNeeded&&!rightUTurnNeeded&!humidityControl) {
+    movingForward ();
   }
-  
-  if ((isPignonDown()) && (findecourse2on))
-  {
-    pignonStop () ;
+//  delay(5000);
+
+  if (humidityControl) {
+    movingStop();
+     pignonDown ();
+     pignonUp () ;
+    //+controle arrosage
   }
+     humidityControl = false;
+//  if (!marche) {
+//        movingStop();
+//    //+arret total et rmontage du pignon
+//  }
+
+
+ rightUTurnNeeded = true;
+  if (rightUTurnNeeded) {
+    movingManoeuvreRigthUTurn(&manoeuvreRunning);
+ }
+
+//  if (leftUTurnNeeded) {
+//    movingManoeuvreLeftUTurn(&manoeuvreRunning);
+//  }
+//
+//
+ /*programme moteur pignon*/
+  movingManoeuvreControl(&manoeuvreRunning);
+
+ pumpOn();
 
 
 }
-
 /* Selon l'humiditÃƒÂ©, dÃƒÂ©finir un certain temps d'arrosage (pompe allumÃƒÂ©e) -> arbitraire avant les tests
     tant que le robot ne dÃƒÂ©tecte pas une tomate, ou n'arrose pas, il doit continuer ÃƒÂ  avancer (2 moteurs de dÃƒÂ©placement)
   moteur pignon crÃƒÂ©maillÃƒÂ¨re dÃƒÂ©clenchÃƒÂ© ÃƒÂ  chaque fois qu'une bonne plante est dÃƒÂ©tectÃƒÂ©e par la camÃƒÂ©ra

@@ -4,18 +4,15 @@
 #define txPin 18 // Broche 18 en tant que TX, ÃƒÂ  raccorder sur RX du HC-05
 #define motorPignonUp 23
 #define motorPignonDown 24
-#define motorDeplacement1Front 37
-#define motorDeplacement1Back 38
-#define motorDeplacement2Front 29
-#define motorDeplacement2Back 30
+#define motorLeftFront 37
+#define motorLeftBack 38
+#define motorRightFront 29
+#define motorRightBack 30
 #define Pump 22
 #define SENSE A1 // Soil Sensor input at Analog PIN A1
 #define buttonpin1 48 // Variable buttonpin = connected to digital line 47, this is where the VMA327 output has to be connected for this test
 #define buttonpin2 47 // Variable buttonpin = connected to digital line 48, this is where the VMA327 output has to be connected for this test
-boolean isPignonUp();
-boolean isPignonDown();
-boolean findecourse1on();
-boolean findecourse2on();
+
 // définition des messages bluetooth
 #define MARCHE 0
 #define ARRET 1
