@@ -18,7 +18,7 @@
 #define WM_ERR_WATERING_NOT_AUTHORIZED 102
 void WM_init();
 void WM_authorization(boolean p_authorization);
-int WM_startMeasureAndWatering(void);
+int WM_startMeasureAndWatering(int p_position);
 int WM_measureAndWateringManagement(void);
 int WM_getMeasureAndWateringStatus(void);
 

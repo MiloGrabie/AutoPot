@@ -1,5 +1,5 @@
 #include "arduino.h"
-#include "arduino.h"
+
 #include "moveSensor.h"
 
 static boolean etatfindecourseUp = false;

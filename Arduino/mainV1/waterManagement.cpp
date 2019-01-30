@@ -2,13 +2,15 @@
 #include "arduino.h"
 #include "moveSensor.h"
 #include "waterManagement.h"
-
+#include "storeManagement.h"
+  
 static int wm_state = WM_STATUS_WATERING_ENDED;
 static int wm_humidity = 0;
 static unsigned int wm_pumpStartTime = 0;
 static unsigned int wm_sensorPauseBeforeMeasureStartTime = 0;
 static unsigned int wm_sensorPauseAfterMeasureStartTime = 0;
 static int wm_wateringDuration = 0;
+static int s_position=0;
 boolean wm_wateringAuthorized;
 
 void WM_initHumiditySensor() {
@@ -19,6 +21,7 @@ int WM_readHumiditySensor(void) {
   int value = 0;
   value = analogRead(MS_SENSOR_PIN);
   // value = value / 10;
+
   return (value);
 }
 
@@ -44,8 +47,9 @@ void WM_init() {
   MS_initSensorMove();
 }
 
-int WM_startMeasureAndWatering(void) {
+int WM_startMeasureAndWatering(int p_position) {
   int ret = 0;
+  s_position=p_position;
   if (wm_wateringAuthorized) {
   if (wm_state == WM_STATUS_WATERING_ENDED) {
     wm_state = WM_STATUS_SENSOR_GOING_DOWN;
@@ -79,6 +83,8 @@ int WM_measureAndWateringManagement(void) {
       case WM_STATUS_SENSOR_MEASURE:
         wm_humidity = WM_readHumiditySensor();
         wm_wateringDuration = WM_WATERING_DURATION_DEFAULT;
+          ret=SM_store(s_position,wm_humidity,wm_wateringDuration);
+          if (ret!=SM_OK)return(ret);
         wm_sensorPauseAfterMeasureStartTime = millis();
         wm_state = WM_STATUS_SENSOR_PAUSE_AFTER_MEASURE;
         break;
